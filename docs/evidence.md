@@ -1,5 +1,7 @@
 # Evidence Ledger
 
+[English](evidence.md) | [Русский](evidence.ru.md)
+
 This ledger separates what is supported by repository artifacts from what remains unproven. It is intentionally conservative and does not treat a unit test as a live-system demonstration.
 
 ## Provenance and citation convention

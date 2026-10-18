@@ -1,5 +1,7 @@
 # Stalbroker
 
+[English](README.md) | [Русский](README.ru.md)
+
 ## Screen-based automation · OCR · State recovery
 
 **Private implementation · Documentation showcase · Status reviewed 18 October 2026**
@@ -57,6 +59,6 @@ The current deliverable is a complete **text-only case study**. No video, screen
 
 ## Publication boundary
 
-The source stays private. This curated documentation has been published publicly with the owner's authorization. It contains six Markdown files and no runtime, source export, configuration, logs, or credentials. No runtime or demo has been published. Future additions require separate approval and content review.
+The source stays private. This curated documentation has been published publicly with the owner's authorization. It contains 12 Markdown files (six English documents + six Russian translations) and no runtime, source export, configuration, logs, or credentials. No runtime or demo has been published. Future additions require separate approval and content review.
 
 [Public-material allowlist](PUBLIC_ALLOWLIST.md) · [Public-material denylist](PUBLIC_DENYLIST.md)

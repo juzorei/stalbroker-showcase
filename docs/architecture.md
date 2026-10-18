@@ -1,5 +1,7 @@
 # Architecture Notes
 
+[English](architecture.md) | [Русский](architecture.ru.md)
+
 ## Framing
 
 The private project is best understood as a supervised, screen-driven workflow rather than a general-purpose trading service. It observes a desktop auction interface, extracts a price from a bounded image region, makes a threshold decision, and records the resulting state. Telegram is a control abstraction around that workflow, not evidence of a public service.

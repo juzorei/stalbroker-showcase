@@ -1,6 +1,25 @@
 # Public Material Denylist
 
+[English](PUBLIC_DENYLIST.md) | [Русский](PUBLIC_DENYLIST.ru.md)
+
 The following material must not be copied into this showcase or included in future additions without a separate, explicit scope change and review. The current curated documentation was published publicly with the owner's authorization; future additions require separate approval and review.
+
+## Current materials
+
+The package contains 12 Markdown files (six English documents + six Russian translations).
+
+- `README.md`
+- `README.ru.md`
+- `docs/architecture.md`
+- `docs/architecture.ru.md`
+- `docs/evidence.md`
+- `docs/evidence.ru.md`
+- `docs/limitations.md`
+- `docs/limitations.ru.md`
+- `PUBLIC_ALLOWLIST.md`
+- `PUBLIC_ALLOWLIST.ru.md`
+- `PUBLIC_DENYLIST.md`
+- `PUBLIC_DENYLIST.ru.md`
 
 ## Always excluded from this package
 

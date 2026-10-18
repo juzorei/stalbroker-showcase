@@ -1,5 +1,7 @@
 # Limitations and Non-Claims
 
+[English](limitations.md) | [Русский](limitations.ru.md)
+
 This case study is intentionally narrower than the private project and should be read as an engineering narrative, not as a product release or operational guide.
 
 ## Evidence limits

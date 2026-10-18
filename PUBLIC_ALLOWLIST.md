@@ -1,15 +1,23 @@
 # Public Material Allowlist
 
-This is a review policy for possible future showcase additions. Inclusion here is **not permission to publish future additions**. The current curated documentation has been published publicly with the owner's authorization. The package is text-only and contains only the six files listed below; the source remains private, and no runtime or demo has been published.
+[English](PUBLIC_ALLOWLIST.md) | [Русский](PUBLIC_ALLOWLIST.ru.md)
+
+This is a review policy for possible future showcase additions. Inclusion here is **not permission to publish future additions**. The current curated documentation has been published publicly with the owner's authorization. The package is text-only and contains only the 12 files listed below (six English documents + six Russian translations); the source remains private, and no runtime or demo has been published.
 
 ## Current materials
 
 - `README.md`
+- `README.ru.md`
 - `docs/architecture.md`
+- `docs/architecture.ru.md`
 - `docs/evidence.md`
+- `docs/evidence.ru.md`
 - `docs/limitations.md`
+- `docs/limitations.ru.md`
 - `PUBLIC_ALLOWLIST.md`
+- `PUBLIC_ALLOWLIST.ru.md`
 - `PUBLIC_DENYLIST.md`
+- `PUBLIC_DENYLIST.ru.md`
 
 ## Future materials that may be prepared safely
 
