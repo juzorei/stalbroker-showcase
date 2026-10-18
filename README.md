@@ -57,6 +57,6 @@ The current deliverable is a complete **text-only case study**. No video, screen
 
 ## Publication boundary
 
-The source stays private. This package was prepared locally; no GitHub repository was created or published as part of its preparation. It contains six Markdown files and no runtime, source export, configuration, logs, or credentials.
+The source stays private. This curated documentation has been published publicly with the owner's authorization. It contains six Markdown files and no runtime, source export, configuration, logs, or credentials. No runtime or demo has been published. Future additions require separate approval and content review.
 
 [Public-material allowlist](PUBLIC_ALLOWLIST.md) · [Public-material denylist](PUBLIC_DENYLIST.md)

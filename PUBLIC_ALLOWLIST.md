@@ -1,6 +1,6 @@
 # Public Material Allowlist
 
-This is a review policy for possible future showcase additions. Inclusion here is **not permission to publish**. The current package is local-only, text-only, and contains only the six files listed below.
+This is a review policy for possible future showcase additions. Inclusion here is **not permission to publish future additions**. The current curated documentation has been published publicly with the owner's authorization. The package is text-only and contains only the six files listed below; the source remains private, and no runtime or demo has been published.
 
 ## Current materials
 

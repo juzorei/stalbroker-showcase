@@ -11,7 +11,7 @@ This case study is intentionally narrower than the private project and should be
 - **End-to-end buy/sell behavior is not demonstrated.** There is no claim that a real lot was bought, resold, settled, or reconciled.
 - **Template OCR is not confirmed live.** Synthetic glyph tests validate mechanics such as segmentation and mask comparison, not recognition quality on real game frames. The evidence ledger records this as offline-only evidence.
 - **`total_earned` and `total_profit` are estimated economics.** They are derived from configured or assumed values and a modeled fee/rounding policy, not from independently verified sale proceeds. The evidence ledger describes the estimate without exposing private source paths.
-- The **original source code is private**. This package does not reproduce it and should not be treated as a substitute for source access.
+- The **original source code is private**. The curated documentation has been published publicly with the owner's authorization; no runtime or demo has been published. Future additions require separate approval and review. This package does not reproduce the source and should not be treated as a substitute for source access.
 
 ## Scope limits
 

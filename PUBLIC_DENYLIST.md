@@ -1,6 +1,6 @@
 # Public Material Denylist
 
-The following material must not be copied into this showcase or included in a future public package without a separate, explicit scope change and review. Publication itself requires separate approval.
+The following material must not be copied into this showcase or included in future additions without a separate, explicit scope change and review. The current curated documentation was published publicly with the owner's authorization; future additions require separate approval and review.
 
 ## Always excluded from this package
 
@@ -16,4 +16,4 @@ The following material must not be copied into this showcase or included in a fu
 
 Replace excluded material with an independently written conceptual explanation, a clearly labeled synthetic example, a redacted summary, or a mock. Do not merely blur or partially mask a sensitive original when a clean synthetic substitute is possible.
 
-The original source remains private. This package is a local curated case study, not an operational distribution.
+The original source remains private. This package is a public curated case study, not an operational distribution. No runtime or demo has been published.

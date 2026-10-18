@@ -50,4 +50,4 @@ This is intentionally described as an abstraction. The available evidence does n
 
 This flow is conceptual, not a transaction guarantee. Persistence occurs at explicit state-change and shutdown boundaries; the purchase path does not save a checkpoint after every successful confirmation. Shared module state and filesystem replacement are not a transactional store. This limitation is part of the [evidence ledger](evidence.md), not a promise of durability.
 
-The original source remains private. This document is a curated description and does not reproduce implementation code.
+The original source remains private. This document is a curated description, published publicly with the owner's authorization, and does not reproduce implementation code. No runtime or demo has been published. Future additions require separate approval and review.

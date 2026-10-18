@@ -23,7 +23,7 @@ The entries below are an evidence summary for the private implementation, not pu
 
 ## Evidence policy
 
-- The source repository is private.
+- The source repository is private. The curated documentation has been published publicly with the owner's authorization; no runtime or demo has been published. Future additions require separate approval and review.
 - The evidence summary above is intentionally non-navigational; no implementation is copied into this package.
 - No screenshot, log, runtime state, secret, credential, username, token, chat identifier, exact coordinate, process command, or operational launch instruction is evidence in this package.
 - “33 tests on Ubuntu and Windows” refers to the last saved CI result reviewed during the source audit; it was not rerun for this package. The static test inventory is consistent with 33 named test functions. The showcase does not run the source project.
