@@ -2,63 +2,32 @@
 
 [English](README.md) | [Русский](README.ru.md)
 
-## Screen-based automation · OCR · State recovery
+Stalbroker reads prices from a game's auction screen and attempts purchases when the price is within a configured limit. It combines screen input, OCR, saved state, supervision, and Telegram controls.
 
-**Private implementation · Documentation showcase · Status reviewed 18 October 2026**
+## How it works
 
-Stalbroker automates price-based purchase attempts in a desktop game's auction interface. It reads visible prices from screen images, compares them with a configured threshold, and coordinates input, notifications, and state updates. This case study explains the engineering behind that workflow; it does not distribute the bot.
+- **OCR** converts a price image into a number. It includes post-processing, template matching, and a Tesseract fallback.
+- **Purchase logic** rejects unreadable prices and prices above the limit. Visual confirmation triggers counter updates and a notification request.
+- **State** is stored in JSON through temporary-file replacement. Loading restores defaults where needed and leaves execution disabled.
+- **Supervision** handles restart checks, failure counts, exceptions, notifications, and stop conditions.
+- **Telegram** provides commands and menus, with transport and conversational state kept separate.
 
-## The engineering problem
+## What was checked
 
-A screen-driven workflow cannot assume that a click succeeded, that a price was read correctly, or that the application is still in the expected state. Stalbroker separates those concerns into screen interaction, recognition, purchase decisions, persistence, supervision, and a Telegram control layer.
+The **18 October 2026 source audit** reviewed saved private CI results: **33 tests passed on Ubuntu and the same 33 on Windows**, not 66 different tests. They cover offline OCR mechanics, configuration, calculations, persistence, and image/template scoring. They were not rerun for these docs. The public repository cannot reproduce the private CI run.
 
-## What is implemented
+These tests do not establish live GUI, Steam, or Telegram network behavior, or an end-to-end buy-and-resell cycle. Template OCR tests use only synthetic glyphs; they do not establish live recognition accuracy.
 
-- **Image-to-price recognition.** OCR post-processing and a template-matching option with a Tesseract fallback. Synthetic tests cover template mechanics; real-screen template accuracy remains unverified.
-- **Threshold-based purchase attempts.** Unreadable prices and prices above the configured limit are rejected before attempting a purchase. Visual confirmation drives the subsequent state update.
-- **State recovery.** JSON writes use temporary-file replacement. Loading restores defaults where appropriate and starts with execution disabled. This does not guarantee a checkpoint after every purchase.
-- **Supervision.** Restart checks, failure counters, exception handling, notifications, and terminal stop conditions are separated from price recognition.
-- **Remote control abstraction.** Telegram transport, commands, menus, and conversational state are separate modules.
+`total_earned` and `total_profit` estimate returns from an assumed resale value; they are not realized profit. Automated resale was not found in the inspected implementation.
 
-## Architecture
+Atomic JSON replacement does not guarantee safe concurrent writes or power-loss durability. State is saved at explicit points, not after every purchase.
 
-```text
-Screen observation → Price recognition → Threshold decision
-                                              │
-                                              v
-                                      Purchase attempt
-                                              │
-                                              v
-                                      Visual confirmation
-                                              │
-                                              v
-                                  Counters + estimated economics
+## Read more
 
-Supervisor coordinates the loop, failure handling and stop conditions.
-Persistence writes state at explicit save points, not after every purchase.
-Telegram commands and notifications provide an operator-facing control layer.
-```
+- [Architecture](docs/architecture.md) — components and data flow
+- [Evidence](docs/evidence.md) — what the audit and tests support
+- [Limitations](docs/limitations.md) — what remains unverified
 
-The diagram describes the private implementation at a conceptual level. It is not an operational recipe or a live demonstration.
-
-## Evidence and current status
-
-Historical CI evidence reviewed during the **18 October 2026 source audit** records **33 passing tests on Ubuntu and 33 on Windows**. These are the same suite on two platforms, not 66 distinct tests. The suite covers offline logic including OCR mechanics, calculations, configuration, persistence, and image/template scoring.
-
-The tests were **not rerun during preparation of this package**. They do not validate live GUI interaction, Steam integration, Telegram network behavior, or an end-to-end buy-and-resell cycle. Private CI evidence is summarized here; it is not publicly reproducible from these documents.
-
-**Economic counters are estimates, not settled proceeds.** The purchase path derives `total_earned` and `total_profit` from an assumed resale value. Automated resale was not found in the inspected implementation, so this showcase makes no claim of verified profit or a complete trading cycle.
-
-## Read the case study
-
-- [Architecture and engineering decisions](docs/architecture.md)
-- [Evidence ledger and verification scope](docs/evidence.md)
-- [Known limitations](docs/limitations.md)
-
-The current deliverable is a complete **text-only case study**. No video, screenshots, interactive demo, or public source code is included. Synthetic visual examples are candidates for a later addition, not available features.
-
-## Publication boundary
-
-The source stays private. This curated documentation has been published publicly with the owner's authorization. It contains 12 Markdown files (six English documents + six Russian translations) and no runtime, source export, configuration, logs, or credentials. No runtime or demo has been published. Future additions require separate approval and content review.
+The source stays private. This repository contains documentation only: no runnable bot, demo, screenshots, or video. Publication rules are linked below.
 
 [Public-material allowlist](PUBLIC_ALLOWLIST.md) · [Public-material denylist](PUBLIC_DENYLIST.md)

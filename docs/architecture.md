@@ -1,55 +1,45 @@
-# Architecture Notes
+# Architecture
 
 [English](architecture.md) | [Русский](architecture.ru.md)
 
-## Framing
+Stalbroker runs a supervised loop around a desktop auction interface. Screen interaction, recognition, purchase decisions, state storage, and Telegram control have separate responsibilities.
 
-The private project is best understood as a supervised, screen-driven workflow rather than a general-purpose trading service. It observes a desktop auction interface, extracts a price from a bounded image region, makes a threshold decision, and records the resulting state. Telegram is a control abstraction around that workflow, not evidence of a public service.
+## Screen and OCR
 
-## Boundaries
+The screen layer supplies images and input operations; it does not decide whether to buy. This keeps environment-dependent interaction separate from price checks.
 
-### 1. Screen and input boundary
+OCR takes a price image and returns a number or an unreadable result. The template path binarizes the image strip, splits symbols at empty columns, normalizes glyphs, and compares masks. If any symbol scores below the threshold, it rejects the whole value. Template availability is checked explicitly; Tesseract is available as a fallback.
 
-The control boundary isolates screen observation and input operations from auction decisions. The separation is valuable because screen interaction is inherently environment-dependent: decision logic can be reasoned about separately from the mechanism that supplies pixels and input events. The [evidence ledger](evidence.md) records this as a conceptual boundary without exporting the private implementation structure.
+## Purchase decisions
 
-This showcase intentionally omits exact coordinates, window titles, process-management details, and operational launch steps.
+The auction logic rejects unreadable prices and prices above the configured buyout threshold before attempting a purchase. A successful visual confirmation updates counters and estimated returns, then requests a notification. Insufficient balance stops the loop and saves state.
 
-### 2. OCR boundary
+The estimates use an assumed resale value, a modeled fee, and rounding rules. They do not record completed sales.
 
-The OCR boundary exposes a narrow “image to price” contract. Its template path binarizes a strip, splits symbols on empty columns, normalizes glyphs, compares masks, and rejects the entire value when a symbol falls below the configured score. A Tesseract path is available as a fallback, and template availability is explicit. The [evidence ledger](evidence.md) summarizes this behavior without exporting private source paths.
+## State storage
 
-The design reduces ambiguity at the decision boundary: a partial or uncertain price is not silently converted into a buy candidate. However, the template path is only validated against synthetic glyphs in the available test evidence; it is not confirmed live. See the [evidence ledger](evidence.md) for the exact claim boundary.
+JSON helpers write to a temporary file and replace the target. If JSON is malformed, the reader attempts recovery and lets the caller use defaults even if retaining the damaged file fails. Loading bot state forces execution off. Conversational state is stored separately.
 
-### 3. Auction decision boundary
+Saves happen at explicit state-change and shutdown points, not after every confirmed purchase. Shared module state and file replacement do not form a transactional store or guarantee safety under concurrent writes or power loss.
 
-The auction layer rejects an unreadable price and rejects prices above the configured buyout threshold before attempting a purchase. On a successful visual confirmation, it updates counters and estimated economics and requests a notification; a terminal insufficient-balance condition stops the workflow and saves state. The economics are estimates derived from an assumed resale value and a modeled fee and rounding policy. They are not proof of completed resale or realized profit; see the [evidence ledger](evidence.md).
+## Supervision
 
-### 4. Persistence boundary
+The runner handles restart checks, exceptions, stop-state updates, saves, and notifications. It counts failed restarts and eventually stops rather than retrying forever. An exception caught by the main loop also marks execution as stopped before reporting the failure.
 
-Persistence is isolated behind JSON read/write helpers. Writes use a temporary file followed by replacement. On malformed JSON, the reader attempts recovery and returns control to caller defaults, even if retention fails. Loading bot state forces execution to start disabled, while conversational state is stored separately. Atomic replacement is not a concurrency or power-loss durability guarantee; the [evidence ledger](evidence.md) states this boundary explicitly.
+## Telegram control
 
-### 5. Supervision boundary
-
-The runner owns the long-lived loop and consolidates restart checks, exception handling, stop-state updates, persistence, and operator-facing notifications. A failed restart is counted and eventually becomes a controlled stop rather than an unbounded retry. An uncaught loop exception also transitions the state to stopped before reporting the failure. This is a design claim, not live recovery evidence.
-
-This demonstrates supervision logic in the codebase; it does not prove that a live game process, desktop session, or external service remains healthy under real conditions.
-
-### 6. Telegram control abstraction
-
-The Telegram side is layered into transport, update/command handling, menus, notifications, and persisted conversational state. Transport owns request/retry boundaries, commands map control intents to state changes, and menus form the presentation abstraction. The [evidence ledger](evidence.md) records this separation without exposing the private module tree.
-
-This is intentionally described as an abstraction. The available evidence does not establish Telegram network reliability, delivery semantics, production access control, or end-to-end operation.
+Transport handles requests and retries. Commands map operator actions to state changes; menus and notifications present the result. Update handling and saved conversational state are separate from transport.
 
 ## Data flow
 
-1. A supervised loop requests a screen observation through the control boundary.
-2. The OCR boundary returns a price or an explicit unreadable result.
-3. The auction boundary compares the value with configured policy.
-4. A successful confirmation updates counters and estimated economics.
-5. Persistence writes the current state through an atomic boundary.
-6. Notifications and Telegram menus expose a summarized control surface.
-7. The runner continues, restarts according to policy, or moves to a stopped state on a terminal condition.
+```text
+Screen → OCR → Threshold check → Purchase attempt → Visual confirmation
+                                                          │
+                                                          v
+                                               Counters + estimates
 
-This flow is conceptual, not a transaction guarantee. Persistence occurs at explicit state-change and shutdown boundaries; the purchase path does not save a checkpoint after every successful confirmation. Shared module state and filesystem replacement are not a transactional store. This limitation is part of the [evidence ledger](evidence.md), not a promise of durability.
+Supervisor: continue, restart, or stop; save at explicit points.
+Telegram: operator commands, menus, and notifications.
+```
 
-The original source remains private. This document is a curated description, published publicly with the owner's authorization, and does not reproduce implementation code. No runtime or demo has been published. Future additions require separate approval and review.
+This describes the code's control flow, not a demonstrated live session. Test coverage and unverified behavior are listed in [Evidence](evidence.md).

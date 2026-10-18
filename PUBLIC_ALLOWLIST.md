@@ -2,9 +2,11 @@
 
 [English](PUBLIC_ALLOWLIST.md) | [Русский](PUBLIC_ALLOWLIST.ru.md)
 
-This is a review policy for possible future showcase additions. Inclusion here is **not permission to publish future additions**. The current curated documentation has been published publicly with the owner's authorization. The package is text-only and contains only the 12 files listed below (six English documents + six Russian translations); the source remains private, and no runtime or demo has been published.
+The owner has approved publication of the current documentation. It is public and text-only; the source remains private. No runtime or demo is published.
 
-## Current materials
+## Current files
+
+The exact manifest is 12 Markdown files: six English documents and six Russian translations.
 
 - `README.md`
 - `README.ru.md`
@@ -19,20 +21,14 @@ This is a review policy for possible future showcase additions. Inclusion here i
 - `PUBLIC_DENYLIST.md`
 - `PUBLIC_DENYLIST.ru.md`
 
-## Future materials that may be prepared safely
+## Before adding anything
 
-Each future item requires its own review and explicit publication approval.
+Every addition needs content review and explicit owner approval. The current approval does not extend to future material, even if it fits one of these categories:
 
-1. **Synthetic OCR examples** generated from artificial glyphs or neutral shapes, with no game frame, user data, source asset, runtime capture, or claim of live OCR quality.
-2. **A redacted architecture diagram** showing conceptual boundaries and data flow only. It must omit coordinates, identifiers, local paths, process commands, operational details, and private implementation text.
-3. **A mock Telegram UI** rendered from invented content. It must be clearly labeled as a mock and must not contain real messages, account identifiers, credentials, chat identifiers, or network traces.
-4. **CI evidence** reduced to a redacted result summary for the offline test matrix. It may state the recorded test count and operating systems, but must not expose raw logs, private repository links, usernames, secrets, environment dumps, or imply live GUI/Steam/Telegram/E2E coverage.
-5. **Revised narrative documents** that maintain the same evidence boundaries, use only generic repository-relative file references, and distinguish observed facts from estimates and unproven behavior.
+- **Synthetic OCR examples:** artificial glyphs or neutral shapes only; no game frames, source assets, runtime captures, user data, or claims of live accuracy.
+- **Architecture diagrams:** components and data flow only; no private implementation text, coordinates, identifiers, local paths, process commands, or operating details.
+- **Telegram mocks:** clearly labeled, with invented content; no real messages, account/chat identifiers, credentials, or network traces.
+- **CI summaries:** recorded test counts and operating systems, with sensitive content removed; no raw logs, private links, usernames, secrets, or environment dumps.
+- **Revised docs:** distinguish observed facts, estimates, and unverified behavior; use only generic repository-relative file references.
 
-## Required review checks
-
-- Confirm ownership and permission for every included artifact.
-- Remove all sensitive and operational content listed in `PUBLIC_DENYLIST.md`.
-- Keep the original source private unless the owner separately decides otherwise.
-- Preserve the explicit non-claims: live GUI/Steam/Telegram network/E2E buy-sell are not demonstrated; template OCR is not confirmed live; `total_earned` and `total_profit` are estimated economics.
-- Do not turn a saved CI result into an unsupported quality label.
+Check ownership and permission for each artifact, then apply [the denylist](PUBLIC_DENYLIST.md). Keep the source private. Preserve the limits in [Evidence](docs/evidence.md): offline CI is not live GUI/Steam/Telegram network or buy-and-resell E2E coverage; synthetic OCR tests do not establish live accuracy; `total_earned` and `total_profit` are estimates. A saved CI result is not a quality guarantee.
